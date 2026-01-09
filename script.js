@@ -1,4 +1,4 @@
-const filters {
+const filters = {
     brightness: 100,
     contrast: 100,
     exposure: 100,
