@@ -1,12 +1,66 @@
 const filters = {
-    brightness: 100,
-    contrast: 100,
-    exposure: 100,
-    saturation: 100,
-    hueRotation: 0,
-    blur: 0,
-    grayscale: 0,
-    sepia: 0,
-    opacity: 100,
-    invert: 0,
+    brightness: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    },
+    contrast: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    },
+    exposure: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    },
+    saturation: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    },
+    hueRotation: {
+        value: 0,
+        min: 0,
+        max: 360,
+        unit: "deg"
+    },
+    blur: {
+        value: 0,
+        min: 0,
+        max: 20, unit: "px"
+    },
+    grayscale: {
+        value: 0,
+        min: 0,
+        max: 100,
+        unit: "%"
+    },
+    sepia: {
+        value: 0,
+        min: 0,
+        max: 100,
+        unit: "%"
+    },
+    opacity: {
+        value: 100,
+        min: 0,
+        max: 100,
+        unit: "%"
+    },
+    invert: {
+        value: 0,
+        min: 0,
+        max: 100,
+        unit: "%"
+    }
+}
+
+
+function createFilterElement(name, unit = "%", value, min, max){
+
 }
