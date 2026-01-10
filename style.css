@@ -102,7 +102,6 @@ main section .right .filters {
   display: flex;
   flex-direction: column;
   gap: var(--gutter-md);
-  
 }
 
 main section .right .filter {
@@ -130,4 +129,12 @@ main section .right .filter input::-webkit-slider-runnable-track {
   background-color: var(--bg-active-color);
   height: 3px;
   border-radius: 2px;
+}
+
+canvas {
+  background-color: red;
+  max-width: 90%;
+  max-height: 80vh;
+  cursor: pointer;
+  border-radius: var(--border-radius-xl);
 }
