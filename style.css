@@ -9,7 +9,7 @@
 html,
 body {
   width: 100%;
-  background-color: wheat;
+  background-color: var(--bg-primary-color);
 }
 
 html {
@@ -132,9 +132,32 @@ main section .right .filter input::-webkit-slider-runnable-track {
 }
 
 canvas {
-  background-color: red;
+  background-color: var(--bg-secondary-color);
   max-width: 90%;
   max-height: 80vh;
   cursor: pointer;
   border-radius: var(--border-radius-xl);
+  display: none;
+}
+
+@media (max-width: 480px) {
+  main section {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  main section .right {
+    width: 180%;
+  }
+  main section .right .filter {
+    width: 90%;
+  }
+
+  main section .bottom {
+    width: 100%;
+  }
+
+  main section .bottom .placeholder {
+    width: 100%;
+  }
 }

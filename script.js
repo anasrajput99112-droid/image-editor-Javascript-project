@@ -1,4 +1,4 @@
-const filters = {
+let filters = {
   brightness: {
     value: 100,
     min: 0,
@@ -11,13 +11,7 @@ const filters = {
     max: 200,
     unit: "%",
   },
-  exposure: {
-    value: 100,
-    min: 0,
-    max: 200,
-    unit: "%",
-  },
-  saturation: {
+  saturate: {
     value: 100,
     min: 0,
     max: 200,
@@ -64,8 +58,15 @@ const filters = {
 const imageCanvas = document.querySelector("#image-canvas");
 const imgInput = document.querySelector("#image-input");
 const canvasCtx = imageCanvas.getContext("2d");
+const resetButton = document.querySelector("#reset-btn");
+const downloadButton = document.querySelector("#download-btn");
 let file = null;
 let image = null;
+
+
+
+
+
 
 const filtersContainer = document.querySelector(".filters");
 
@@ -88,28 +89,33 @@ function createFilterElement(name, unit = "%", value, min, max) {
 
   input.addEventListener("input", (event) => {
     filters[name].value = input.value;
+    applyFilters();
   });
 
   return div;
 }
 
-Object.keys(filters).forEach((key) => {
-  //console.log(filters[filter]);
-  const filterElement = createFilterElement(
-    key,
-    filters[key].unit,
-    filters[key].value,
-    filters[key].min,
-    filters[key].max
-  );
-  // console.log(filterElement);
-  filtersContainer.appendChild(filterElement);
-});
+function createFilters() {
+  Object.keys(filters).forEach((key) => {
+    //console.log(filters[filter]);
+    const filterElement = createFilterElement(
+      key,
+      filters[key].unit,
+      filters[key].value,
+      filters[key].min,
+      filters[key].max
+    );
+    // console.log(filterElement);
+    filtersContainer.appendChild(filterElement);
+  });
+}
+
+createFilters();
 
 imgInput.addEventListener("change", (event) => {
   file = event.target.files[0];
   const imagePlaceHoder = document.querySelector(".placeholder");
-
+  imageCanvas.style.display = "block";
   imagePlaceHoder.style.display = "none";
 
   const img = new Image();
@@ -124,6 +130,86 @@ imgInput.addEventListener("change", (event) => {
 });
 
 function applyFilters() {
-  canvasCtx.filter = `brightness(${filters.brightness.value}${filters.brightness.unit})`;
+  canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+  canvasCtx.filter = `
+  brightness(${filters.brightness.value}${filters.brightness.unit})
+  contrast(${filters.contrast.value}${filters.contrast.unit})
+  saturate(${filters.saturate.value}${filters.saturate.unit})
+  hue-rotate(${filters.hueRotation.value}${filters.hueRotation.unit})
+  blur(${filters.blur.value}${filters.blur.unit})
+  grayscale(${filters.grayscale.value}${filters.grayscale.unit})
+  sepia(${filters.sepia.value}${filters.sepia.unit})
+  opacity(${filters.opacity.value}${filters.opacity.unit})
+  invert(${filters.invert.value}${filters.invert.unit})
+  `.trim();
   canvasCtx.drawImage(image, 0, 0);
 }
+
+resetButton.addEventListener("click", () => {
+  filters = {
+    brightness: {
+      value: 100,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    contrast: {
+      value: 100,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    saturate: {
+      value: 100,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    hueRotation: {
+      value: 0,
+      min: 0,
+      max: 360,
+      unit: "deg",
+    },
+    blur: {
+      value: 0,
+      min: 0,
+      max: 20,
+      unit: "px",
+    },
+    grayscale: {
+      value: 0,
+      min: 0,
+      max: 100,
+      unit: "%",
+    },
+    sepia: {
+      value: 0,
+      min: 0,
+      max: 100,
+      unit: "%",
+    },
+    opacity: {
+      value: 100,
+      min: 0,
+      max: 100,
+      unit: "%",
+    },
+    invert: {
+      value: 0,
+      min: 0,
+      max: 100,
+      unit: "%",
+    },
+  };
+  applyFilters();
+  filtersContainer.innerHTML = "";
+  createFilters();
+});
+
+downloadButton.addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.download = "edited-image-png";
+  link.href = imageCanvas.toDataURL();
+  link.click();
+});
